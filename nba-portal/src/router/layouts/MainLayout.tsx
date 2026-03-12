@@ -3,13 +3,13 @@ import { Outlet } from 'react-router-dom';
 import TopBar from '../../components/navigation/TopBar';
 import Sidebar, { DRAWER_WIDTH } from '../../components/navigation/Sidebar';
 import { useApp } from '../../store/AppContext';
-import { NAVY } from '../../theme/tokens';
+import { MIDNIGHT } from '../../theme/tokens';
 
 export default function MainLayout() {
   const { sidebarOpen, notifications, removeNotification } = useApp();
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: NAVY }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: MIDNIGHT }}>
       <TopBar />
       <Sidebar open={sidebarOpen} />
       <Box

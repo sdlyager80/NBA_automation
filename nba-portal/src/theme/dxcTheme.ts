@@ -1,29 +1,30 @@
 import { createTheme, alpha } from '@mui/material/styles';
 import {
-  NAVY, NAVY_LIGHT, NAVY_DARK, NAVY_SURFACE,
-  CYAN, CYAN_DARK,
+  MIDNIGHT, MIDNIGHT_LIGHT, MIDNIGHT_DARK, MIDNIGHT_SURFACE,
+  ROYAL, ROYAL_LIGHT, ROYAL_DARK,
+  TRUE_BLUE, TRUE_BLUE_DARK,
+  GOLD, MELON, SKY, SUCCESS,
   BORDER, BORDER_LIGHT,
   TEXT_PRIMARY, TEXT_SECONDARY,
-  SUCCESS, WARNING, ERROR,
 } from './tokens';
 
 export const dxcTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: NAVY_LIGHT,
-      light: NAVY_SURFACE,
-      dark: NAVY_DARK,
+      main: ROYAL,
+      light: ROYAL_LIGHT,
+      dark: ROYAL_DARK,
       contrastText: TEXT_PRIMARY,
     },
     secondary: {
-      main: CYAN,
-      dark: CYAN_DARK,
-      contrastText: NAVY_DARK,
+      main: TRUE_BLUE,
+      dark: TRUE_BLUE_DARK,
+      contrastText: '#FFFFFF',
     },
     background: {
-      default: NAVY,
-      paper: NAVY_LIGHT,
+      default: MIDNIGHT,
+      paper: MIDNIGHT_LIGHT,
     },
     text: {
       primary: TEXT_PRIMARY,
@@ -31,9 +32,9 @@ export const dxcTheme = createTheme({
     },
     divider: BORDER,
     success: { main: SUCCESS },
-    warning: { main: WARNING },
-    error: { main: ERROR },
-    info: { main: CYAN },
+    warning: { main: GOLD },
+    error: { main: MELON },
+    info: { main: SKY },
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica Neue", sans-serif',
@@ -51,11 +52,11 @@ export const dxcTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          backgroundColor: NAVY,
+          backgroundColor: MIDNIGHT,
           scrollbarWidth: 'thin',
-          scrollbarColor: `${BORDER_LIGHT} ${NAVY_DARK}`,
+          scrollbarColor: `${BORDER_LIGHT} ${MIDNIGHT_DARK}`,
           '&::-webkit-scrollbar': { width: 6 },
-          '&::-webkit-scrollbar-track': { background: NAVY_DARK },
+          '&::-webkit-scrollbar-track': { background: MIDNIGHT_DARK },
           '&::-webkit-scrollbar-thumb': { background: BORDER_LIGHT, borderRadius: 3 },
         },
       },
@@ -65,27 +66,32 @@ export const dxcTheme = createTheme({
       styleOverrides: {
         root: { textTransform: 'none', fontWeight: 600, letterSpacing: '0.01em' },
         containedSecondary: {
-          backgroundColor: CYAN,
-          color: NAVY_DARK,
-          '&:hover': { backgroundColor: CYAN_DARK },
-        },
-        outlinedSecondary: {
-          borderColor: CYAN,
-          color: CYAN,
-          '&:hover': { backgroundColor: alpha(CYAN, 0.08), borderColor: CYAN },
+          background: `linear-gradient(135deg, ${TRUE_BLUE} 0%, ${ROYAL_LIGHT} 100%)`,
+          color: '#FFFFFF',
+          '&:hover': { background: `linear-gradient(135deg, ${TRUE_BLUE_DARK} 0%, ${ROYAL} 100%)` },
         },
         containedPrimary: {
-          backgroundColor: NAVY_SURFACE,
+          backgroundColor: ROYAL,
           color: TEXT_PRIMARY,
-          border: `1px solid ${BORDER_LIGHT}`,
-          '&:hover': { backgroundColor: BORDER, borderColor: CYAN },
+          border: `1px solid ${ROYAL_LIGHT}`,
+          '&:hover': { backgroundColor: ROYAL_LIGHT },
+        },
+        outlinedSecondary: {
+          borderColor: TRUE_BLUE,
+          color: TRUE_BLUE,
+          '&:hover': { backgroundColor: alpha(TRUE_BLUE, 0.08), borderColor: TRUE_BLUE },
+        },
+        outlinedPrimary: {
+          borderColor: BORDER_LIGHT,
+          color: TEXT_SECONDARY,
+          '&:hover': { borderColor: TRUE_BLUE, color: TRUE_BLUE, backgroundColor: alpha(TRUE_BLUE, 0.06) },
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundColor: NAVY_LIGHT,
+          backgroundColor: MIDNIGHT_LIGHT,
           border: `1px solid ${BORDER}`,
           backgroundImage: 'none',
         },
@@ -95,7 +101,7 @@ export const dxcTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundImage: 'none',
-          backgroundColor: NAVY_LIGHT,
+          backgroundColor: MIDNIGHT_LIGHT,
           border: `1px solid ${BORDER}`,
         },
         elevation0: { border: 'none' },
@@ -104,7 +110,7 @@ export const dxcTheme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: NAVY_DARK,
+          backgroundColor: MIDNIGHT_DARK,
           borderBottom: `1px solid ${BORDER}`,
           backgroundImage: 'none',
         },
@@ -113,7 +119,7 @@ export const dxcTheme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: NAVY_DARK,
+          backgroundColor: MIDNIGHT_DARK,
           borderRight: `1px solid ${BORDER}`,
         },
       },
@@ -124,10 +130,10 @@ export const dxcTheme = createTheme({
         root: {
           '& .MuiOutlinedInput-root': {
             '& fieldset': { borderColor: BORDER_LIGHT },
-            '&:hover fieldset': { borderColor: CYAN },
-            '&.Mui-focused fieldset': { borderColor: CYAN },
+            '&:hover fieldset': { borderColor: TRUE_BLUE },
+            '&.Mui-focused fieldset': { borderColor: TRUE_BLUE },
           },
-          '& .MuiInputLabel-root.Mui-focused': { color: CYAN },
+          '& .MuiInputLabel-root.Mui-focused': { color: TRUE_BLUE },
         },
       },
     },
@@ -135,28 +141,37 @@ export const dxcTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-notchedOutline': { borderColor: BORDER_LIGHT },
-          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: CYAN },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: CYAN },
+          '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: TRUE_BLUE },
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: TRUE_BLUE },
         },
       },
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          '&:hover': { backgroundColor: alpha(CYAN, 0.08) },
-          '&.Mui-selected': { backgroundColor: alpha(CYAN, 0.15) },
-          '&.Mui-selected:hover': { backgroundColor: alpha(CYAN, 0.2) },
+          '&:hover': { backgroundColor: alpha(TRUE_BLUE, 0.08) },
+          '&.Mui-selected': { backgroundColor: alpha(TRUE_BLUE, 0.15) },
+          '&.Mui-selected:hover': { backgroundColor: alpha(TRUE_BLUE, 0.2) },
         },
       },
     },
     MuiTableHead: {
       styleOverrides: {
-        root: { '& .MuiTableCell-root': { backgroundColor: NAVY_DARK, fontWeight: 600, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: TEXT_SECONDARY } },
+        root: {
+          '& .MuiTableCell-root': {
+            backgroundColor: MIDNIGHT_DARK,
+            fontWeight: 600,
+            fontSize: '0.75rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
+            color: TEXT_SECONDARY,
+          },
+        },
       },
     },
     MuiTableRow: {
       styleOverrides: {
-        root: { '&:hover': { backgroundColor: alpha(CYAN, 0.04) }, cursor: 'pointer' },
+        root: { '&:hover': { backgroundColor: alpha(TRUE_BLUE, 0.04) }, cursor: 'pointer' },
       },
     },
     MuiTableCell: {
@@ -180,12 +195,12 @@ export const dxcTheme = createTheme({
           borderRadius: 6,
           margin: '1px 8px',
           '&.Mui-selected': {
-            backgroundColor: alpha(CYAN, 0.12),
-            color: CYAN,
-            '& .MuiListItemIcon-root': { color: CYAN },
-            '&:hover': { backgroundColor: alpha(CYAN, 0.16) },
+            backgroundColor: alpha(TRUE_BLUE, 0.15),
+            color: TRUE_BLUE,
+            '& .MuiListItemIcon-root': { color: TRUE_BLUE },
+            '&:hover': { backgroundColor: alpha(TRUE_BLUE, 0.2) },
           },
-          '&:hover': { backgroundColor: alpha(CYAN, 0.06) },
+          '&:hover': { backgroundColor: alpha(TRUE_BLUE, 0.07) },
         },
       },
     },
@@ -201,12 +216,18 @@ export const dxcTheme = createTheme({
     },
     MuiStepLabel: {
       styleOverrides: {
-        label: { '&.Mui-active': { color: CYAN, fontWeight: 600 }, '&.Mui-completed': { color: SUCCESS } },
+        label: {
+          '&.Mui-active': { color: TRUE_BLUE, fontWeight: 600 },
+          '&.Mui-completed': { color: SUCCESS },
+        },
       },
     },
     MuiStepIcon: {
       styleOverrides: {
-        root: { '&.Mui-active': { color: CYAN }, '&.Mui-completed': { color: SUCCESS } },
+        root: {
+          '&.Mui-active': { color: TRUE_BLUE },
+          '&.Mui-completed': { color: SUCCESS },
+        },
       },
     },
     MuiTab: {
@@ -214,13 +235,13 @@ export const dxcTheme = createTheme({
         root: {
           textTransform: 'none',
           fontWeight: 600,
-          '&.Mui-selected': { color: CYAN },
+          '&.Mui-selected': { color: TRUE_BLUE },
         },
       },
     },
     MuiTabs: {
       styleOverrides: {
-        indicator: { backgroundColor: CYAN },
+        indicator: { backgroundColor: TRUE_BLUE },
       },
     },
     MuiAlert: {
@@ -230,7 +251,13 @@ export const dxcTheme = createTheme({
     },
     MuiTooltip: {
       styleOverrides: {
-        tooltip: { backgroundColor: NAVY_DARK, border: `1px solid ${BORDER_LIGHT}`, fontSize: '0.75rem' },
+        tooltip: { backgroundColor: MIDNIGHT_DARK, border: `1px solid ${BORDER_LIGHT}`, fontSize: '0.75rem' },
+      },
+    },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: { backgroundColor: alpha(TRUE_BLUE, 0.15) },
+        bar: { backgroundColor: TRUE_BLUE },
       },
     },
   },
