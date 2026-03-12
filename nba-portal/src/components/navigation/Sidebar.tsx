@@ -17,7 +17,8 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 import { useAuth } from '../../store/AuthContext';
 import { NAV_ITEMS } from '../../utils/rolePermissions';
-import { NAVY_DARK, CYAN, BORDER, TEXT_SECONDARY } from '../../theme/tokens';
+import { MIDNIGHT, TRUE_BLUE } from '../../theme/tokens';
+import { alpha } from '@mui/material/styles';
 
 const DRAWER_WIDTH = 240;
 
@@ -45,14 +46,18 @@ const GROUP_LABELS: Record<string, string> = {
   producer:    'Producer',
 };
 
+// Sidebar text colors (on dark Midnight bg)
+const SIDEBAR_TEXT    = '#CBD5E1';
+const SIDEBAR_MUTED   = '#64748B';
+const SIDEBAR_ACTIVE  = '#FFFFFF';
+const SIDEBAR_BORDER  = 'rgba(255,255,255,0.07)';
+
 export default function Sidebar({ open }: { open: boolean }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
 
   const visibleItems = NAV_ITEMS.filter(item => item.roles.includes(user.role));
-
-  // Group items
   const groups = Array.from(new Set(visibleItems.map(i => i.group)));
 
   return (
@@ -68,40 +73,70 @@ export default function Sidebar({ open }: { open: boolean }) {
           mt: '56px',
           height: 'calc(100% - 56px)',
           overflowX: 'hidden',
+          bgcolor: MIDNIGHT,
+          borderRight: 'none',
+          boxShadow: '2px 0 12px rgba(14,16,32,0.15)',
         },
       }}
     >
-      <Box sx={{ pt: 1, pb: 2 }}>
+      <Box sx={{ pt: 1.5, pb: 2 }}>
         {groups.map((group, gi) => {
           const items = visibleItems.filter(i => i.group === group);
           return (
             <Box key={group}>
-              {gi > 0 && <Divider sx={{ my: 1, borderColor: BORDER }} />}
+              {gi > 0 && <Divider sx={{ my: 1.5, borderColor: SIDEBAR_BORDER, mx: 2 }} />}
               {GROUP_LABELS[group] && (
                 <Typography
                   variant="caption"
-                  sx={{ px: 2.5, py: 0.5, display: 'block', color: TEXT_SECONDARY, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, fontSize: '0.62rem' }}
+                  sx={{
+                    px: 2.5, py: 0.5, display: 'block',
+                    color: SIDEBAR_MUTED,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    fontWeight: 700,
+                    fontSize: '0.6rem',
+                  }}
                 >
                   {GROUP_LABELS[group]}
                 </Typography>
               )}
               <List dense disablePadding>
                 {items.map(item => {
-                  const isActive = location.pathname === item.path || (item.path !== '/' && location.pathname.startsWith(item.path));
+                  const isActive = location.pathname === item.path ||
+                    (item.path !== '/' && location.pathname.startsWith(item.path));
                   return (
                     <ListItem key={item.path} disablePadding sx={{ px: 1 }}>
                       <Tooltip title="" placement="right">
                         <ListItemButton
                           selected={isActive}
                           onClick={() => navigate(item.path)}
-                          sx={{ borderRadius: 1.5, py: 0.75 }}
+                          sx={{
+                            borderRadius: 1.5,
+                            py: 0.8,
+                            color: isActive ? SIDEBAR_ACTIVE : SIDEBAR_TEXT,
+                            bgcolor: isActive ? alpha(TRUE_BLUE, 0.18) : 'transparent',
+                            borderLeft: isActive ? `3px solid ${TRUE_BLUE}` : '3px solid transparent',
+                            pl: isActive ? 1.25 : 1.5,
+                            '&:hover': {
+                              bgcolor: alpha('#fff', 0.06),
+                              color: SIDEBAR_ACTIVE,
+                            },
+                            '&.Mui-selected': {
+                              bgcolor: alpha(TRUE_BLUE, 0.18),
+                              '&:hover': { bgcolor: alpha(TRUE_BLUE, 0.22) },
+                            },
+                          }}
                         >
-                          <ListItemIcon sx={{ minWidth: 32, color: isActive ? CYAN : TEXT_SECONDARY }}>
+                          <ListItemIcon sx={{ minWidth: 32, color: isActive ? TRUE_BLUE : SIDEBAR_MUTED }}>
                             {ICONS[item.icon]}
                           </ListItemIcon>
                           <ListItemText
                             primary={item.label}
-                            primaryTypographyProps={{ fontSize: '0.82rem', fontWeight: isActive ? 600 : 400 }}
+                            primaryTypographyProps={{
+                              fontSize: '0.82rem',
+                              fontWeight: isActive ? 600 : 400,
+                              color: 'inherit',
+                            }}
                           />
                         </ListItemButton>
                       </Tooltip>
@@ -115,14 +150,14 @@ export default function Sidebar({ open }: { open: boolean }) {
       </Box>
 
       {/* Bottom: ServiceNow status */}
-      <Box sx={{ mt: 'auto', p: 2, borderTop: `1px solid ${BORDER}` }}>
+      <Box sx={{ mt: 'auto', p: 2, borderTop: `1px solid ${SIDEBAR_BORDER}` }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#4CAF50' }} />
-          <Typography variant="caption" sx={{ color: TEXT_SECONDARY, fontSize: '0.7rem' }}>
+          <Box sx={{ width: 7, height: 7, borderRadius: '50%', bgcolor: '#4ADE80', boxShadow: '0 0 6px #4ADE80' }} />
+          <Typography sx={{ fontSize: '0.72rem', color: SIDEBAR_TEXT, fontWeight: 500 }}>
             ServiceNow Connected
           </Typography>
         </Box>
-        <Typography variant="caption" sx={{ color: TEXT_SECONDARY, fontSize: '0.65rem', display: 'block', mt: 0.25 }}>
+        <Typography sx={{ fontSize: '0.65rem', color: SIDEBAR_MUTED, mt: 0.25 }}>
           PRENEED_DEMO instance
         </Typography>
       </Box>

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/AuthContext';
 import { useApp } from '../../store/AppContext';
 import { ROLE_LABELS } from '../../types/user.types';
-import { NAVY_DARK, CYAN, BORDER, TEXT_SECONDARY } from '../../theme/tokens';
+import { ROYAL, TRUE_BLUE, BORDER, TEXT_SECONDARY, TEXT_MUTED, MIDNIGHT } from '../../theme/tokens';
 
 export default function TopBar() {
   const { user, setUser, personas } = useAuth();
@@ -29,17 +29,18 @@ export default function TopBar() {
         </IconButton>
 
         {/* Logo */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, cursor: 'pointer' }} onClick={() => navigate('/')}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, cursor: 'pointer' }} onClick={() => navigate('/')}>
           <Box sx={{
-            width: 28, height: 28, borderRadius: 1,
-            background: `linear-gradient(135deg, ${CYAN} 0%, #0090C7 100%)`,
+            width: 30, height: 30, borderRadius: 1.5,
+            background: `linear-gradient(135deg, ${ROYAL} 0%, ${TRUE_BLUE} 100%)`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: `0 2px 8px rgba(0,74,172,0.35)`,
           }}>
-            <Typography sx={{ fontSize: '0.75rem', fontWeight: 800, color: NAVY_DARK }}>B</Typography>
+            <Typography sx={{ fontSize: '0.72rem', fontWeight: 800, color: '#fff', letterSpacing: '-0.5px' }}>B</Typography>
           </Box>
           <Box>
-            <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, lineHeight: 1, color: '#fff' }}>Bloom</Typography>
-            <Typography sx={{ fontSize: '0.65rem', color: TEXT_SECONDARY, lineHeight: 1 }}>Insurance Portal</Typography>
+            <Typography sx={{ fontSize: '0.88rem', fontWeight: 700, lineHeight: 1, color: MIDNIGHT, letterSpacing: '-0.3px' }}>Bloom</Typography>
+            <Typography sx={{ fontSize: '0.62rem', color: TEXT_MUTED, lineHeight: 1.2 }}>Insurance Portal</Typography>
           </Box>
         </Box>
 
@@ -52,19 +53,25 @@ export default function TopBar() {
             size="small"
             onClick={(e) => setPersonaAnchor(e.currentTarget)}
             sx={{
-              bgcolor: 'rgba(0,174,239,0.1)',
-              color: CYAN,
-              border: `1px solid rgba(0,174,239,0.3)`,
+              bgcolor: `rgba(0,74,172,0.07)`,
+              color: ROYAL,
+              border: `1px solid rgba(0,74,172,0.2)`,
               fontWeight: 600,
-              fontSize: '0.7rem',
+              fontSize: '0.72rem',
               cursor: 'pointer',
-              '&:hover': { bgcolor: 'rgba(0,174,239,0.15)' },
+              '&:hover': { bgcolor: `rgba(0,74,172,0.12)` },
             }}
           />
         </Tooltip>
-        <Menu anchorEl={personaAnchor} open={Boolean(personaAnchor)} onClose={() => setPersonaAnchor(null)}>
-          <Box sx={{ px: 2, py: 1 }}>
-            <Typography variant="caption" sx={{ color: TEXT_SECONDARY, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>Switch Persona</Typography>
+
+        <Menu
+          anchorEl={personaAnchor}
+          open={Boolean(personaAnchor)}
+          onClose={() => setPersonaAnchor(null)}
+          PaperProps={{ sx: { minWidth: 220, mt: 0.5 } }}
+        >
+          <Box sx={{ px: 2, py: 1.25 }}>
+            <Typography variant="overline">Switch Persona</Typography>
           </Box>
           <Divider />
           {personas.map(p => (
@@ -72,31 +79,41 @@ export default function TopBar() {
               key={p.sys_id}
               selected={p.sys_id === user.sys_id}
               onClick={() => { setUser(p); setPersonaAnchor(null); navigate('/'); }}
-              sx={{ gap: 1.5 }}
+              sx={{ gap: 1.5, py: 1 }}
             >
-              <Avatar sx={{ width: 28, height: 28, bgcolor: p.avatarColor, fontSize: '0.7rem', fontWeight: 700 }}>{p.avatarInitials}</Avatar>
+              <Avatar sx={{ width: 30, height: 30, bgcolor: p.avatarColor, fontSize: '0.7rem', fontWeight: 700 }}>{p.avatarInitials}</Avatar>
               <Box>
-                <Typography sx={{ fontSize: '0.82rem', fontWeight: 600 }}>{p.name}</Typography>
+                <Typography sx={{ fontSize: '0.82rem', fontWeight: 600, lineHeight: 1.3 }}>{p.name}</Typography>
                 <Typography variant="caption" sx={{ color: TEXT_SECONDARY }}>{ROLE_LABELS[p.role]}</Typography>
               </Box>
             </MenuItem>
           ))}
         </Menu>
 
-        <IconButton sx={{ color: TEXT_SECONDARY }}>
+        <IconButton sx={{ color: TEXT_SECONDARY, '&:hover': { color: MIDNIGHT } }}>
           <NotificationsOutlinedIcon fontSize="small" />
         </IconButton>
 
         <Tooltip title={`${user.name} — ${ROLE_LABELS[user.role]}`}>
           <Avatar
-            sx={{ width: 32, height: 32, bgcolor: user.avatarColor, fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', border: `2px solid ${BORDER}` }}
+            sx={{
+              width: 32, height: 32, bgcolor: user.avatarColor, fontSize: '0.75rem', fontWeight: 700,
+              cursor: 'pointer', border: `2px solid ${BORDER}`,
+              '&:hover': { borderColor: ROYAL },
+              transition: 'border-color 0.15s',
+            }}
             onClick={(e) => setAnchorEl(e.currentTarget)}
           >
             {user.avatarInitials}
           </Avatar>
         </Tooltip>
 
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={() => setAnchorEl(null)}
+          PaperProps={{ sx: { minWidth: 200, mt: 0.5 } }}
+        >
           <Box sx={{ px: 2, py: 1.5 }}>
             <Typography sx={{ fontWeight: 600, fontSize: '0.85rem' }}>{user.name}</Typography>
             <Typography variant="caption" sx={{ color: TEXT_SECONDARY }}>{ROLE_LABELS[user.role]}</Typography>
